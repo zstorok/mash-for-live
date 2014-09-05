@@ -1,0 +1,20 @@
+<div class="container-fluid">
+	<div class="page-header">
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="input-group">
+				<span class="input-group-addon"> <span
+					class="glyphicon glyphicon-search"></span>
+				</span> {{input class="form-control" placeholder="Search Soundcloud"
+				value=soundCloudSearch}}
+			</div>
+		</div>
+		<hr>
+		{{#each i in results}}
+			{{soundcloud-player track=i}}
+		{{/each}}
+	</div>
+
+</div>

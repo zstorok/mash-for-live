@@ -1,0 +1,36 @@
+.ember-application {
+    margin: 20px;
+}
+
+.soundcloud-player {
+	margin-top: 15px;
+}
+.soundcloud-player h3 {
+	
+}
+.widget {
+	height: 100px;
+}
+.widget .artwork {
+	width: 100px;
+	height: 100px;
+}
+.widget .player {
+	width: calc(100% - 100px);
+	padding: 0 5px;
+}
+.widget .player audio {
+	width: 100%;
+	height: 30px;
+}
+.widget .player .waveform {
+	width: 100%;
+	height: 70px;
+	background-color: #333;
+	
+	        filter: invert(1);
+	-webkit-filter: invert(1);
+	   -moz-filter: invert(1);
+	    -ms-filter: invert(1);
+	     -o-filter: invert(1);
+}
