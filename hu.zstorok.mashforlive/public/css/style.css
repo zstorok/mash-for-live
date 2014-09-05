@@ -7,7 +7,12 @@
 	margin: 40px 0 20px;
 	border-bottom: none;
 }
-.soundcloud-player {
+
+.search-bar {
+	padding-bottom: 15px;
+}
+
+.soun0dcloud-player {
 	margin-top: 15px;
 }
 .soundcloud-player h3 {
