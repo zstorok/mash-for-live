@@ -13,5 +13,6 @@ public final class EchoNestConstants {
     
     public static final String BASE_URL = "http://developer.echonest.com/api/v4";
 	public static final String TRACK_AUDIO_SUMMARY_URL_TEMPLATE = "/track/profile?api_key={api_key}&format=json&bucket=audio_summary&id={id}";
+	public static final String TRACK_AUDIO_STATUS_URL_TEMPLATE = "/track/profile?api_key={api_key}&format=json&id={id}";
 	public static final String TRACK_UPLOAD_URL_TEMPLATE = "/track/upload?api_key={api_key}&url={url}";
 }

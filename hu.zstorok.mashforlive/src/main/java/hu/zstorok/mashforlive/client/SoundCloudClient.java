@@ -33,7 +33,7 @@ public class SoundCloudClient {
 				JsonNode.class, trackId, SoundCloudConstants.CONSUMER_KEY);
 		return jsonNode;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getTracks(Map<String, String> options) {
 		Map<String, Object>[] maps = (Map<String, Object>[])restTemplate.getForObject("https://api.soundcloud.com/tracks.json?consumer_key={consumer_key}?filter=downloadable", 

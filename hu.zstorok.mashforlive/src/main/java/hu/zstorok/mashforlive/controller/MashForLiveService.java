@@ -53,7 +53,8 @@ public class MashForLiveService {
     	JsonNode echoNestTrackAudioSummaryResponse = echoNestTrackAudioSummary.get("response");
     	String echoNestAnalysisUrl = echoNestTrackAudioSummaryResponse.get("track").get("audio_summary").get("analysis_url").asText();
     	// get EchoNest track analysis data
-    	JsonNode echoNestAnalysis = echoNestClient.getAnalysisAsJsonNode(echoNestAnalysisUrl);
+		JsonNode echoNestAnalysis = echoNestClient.getAnalysisAsJsonNode(
+				echoNestAnalysisUrl, echoNestTrackId);
 
     	LiveSet liveSet = liveSetBuilder.build(echoNestAnalysis);
 		return liveSetGenerator.generateAls(liveSet);
