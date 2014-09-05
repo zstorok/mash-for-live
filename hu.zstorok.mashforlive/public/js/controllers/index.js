@@ -33,7 +33,7 @@ App.IndexController = Ember.Controller.extend({
 	actions: {
 		submitTrack: function(track) {
 			track.set("downloading", true);
-			$.post("/service/als", {soundCloudTrackId: track.id})
+			$.post("/service/zip", {soundCloudTrackId: track.id})
 				.done(function() {
 					console.log("done");
 				})
