@@ -230,6 +230,7 @@
 											<LomId Value="0" />
 											<LomIdView Value="0" />
 											<WarpMarkers>
+												<WarpMarker SecTime="0" BeatTime="0" />
 												{{#getWarpMarkers}}
 												<WarpMarker SecTime="{{getSecTime}}" BeatTime="{{getBeatTime}}" />
 												{{/getWarpMarkers}}
@@ -993,54 +994,14 @@
 		</PreHearTrack>
 		<SendsPre />
 		<SceneNames>
-			<Scene Value=" 1">
+			{{#getScenes}}
+			<Scene Value=" {{toString}}">
 				<Annotation Value="" />
 				<ColorIndex Value="0" />
 				<LomId Value="0" />
 				<ClipSlotsListWrapper LomId="0" />
 			</Scene>
-			<Scene Value=" 2">
-				<Annotation Value="" />
-				<ColorIndex Value="0" />
-				<LomId Value="0" />
-				<ClipSlotsListWrapper LomId="0" />
-			</Scene>
-			<Scene Value=" 3">
-				<Annotation Value="" />
-				<ColorIndex Value="0" />
-				<LomId Value="0" />
-				<ClipSlotsListWrapper LomId="0" />
-			</Scene>
-			<Scene Value=" 4">
-				<Annotation Value="" />
-				<ColorIndex Value="0" />
-				<LomId Value="0" />
-				<ClipSlotsListWrapper LomId="0" />
-			</Scene>
-			<Scene Value=" 5">
-				<Annotation Value="" />
-				<ColorIndex Value="0" />
-				<LomId Value="0" />
-				<ClipSlotsListWrapper LomId="0" />
-			</Scene>
-			<Scene Value=" 6">
-				<Annotation Value="" />
-				<ColorIndex Value="0" />
-				<LomId Value="0" />
-				<ClipSlotsListWrapper LomId="0" />
-			</Scene>
-			<Scene Value=" 7">
-				<Annotation Value="" />
-				<ColorIndex Value="0" />
-				<LomId Value="0" />
-				<ClipSlotsListWrapper LomId="0" />
-			</Scene>
-			<Scene Value=" 8">
-				<Annotation Value="" />
-				<ColorIndex Value="0" />
-				<LomId Value="0" />
-				<ClipSlotsListWrapper LomId="0" />
-			</Scene>
+			{{/getScenes}}
 		</SceneNames>
 		<Transport>
 			<PhaseNudgeTempo Value="10" />

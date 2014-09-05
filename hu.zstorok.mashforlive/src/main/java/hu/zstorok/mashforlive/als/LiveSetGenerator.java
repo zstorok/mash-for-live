@@ -55,6 +55,9 @@ public class LiveSetGenerator {
 			GZIPOutputStream zipOutputStream = new GZIPOutputStream(byteArrayOutputStream);
 			zipOutputStream.write(generateXml(liveSet).getBytes());
 			zipOutputStream.finish();
+			// TODO debug
+			Files.write(byteArrayOutputStream.toByteArray(), new File(
+					"project.als"));
 			return byteArrayOutputStream.toByteArray();
 		} catch (IOException e) {
 			throw new RuntimeException(e);

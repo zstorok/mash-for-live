@@ -24,4 +24,17 @@ public class LiveSet {
 	public float getTempo() {
 		return tempo;
 	}
+
+	public List<String> getScenes() {
+		List<String> scenes = Lists.newArrayList();
+		int max=0;
+		for (Track t : tracks) {
+			int len = t.getClips().size();
+			if (len > max) max = len;
+		}
+		for (int i=0; i<max; i++) {
+			scenes.add("" + i);
+		}
+		return scenes;
+	}
 }
