@@ -13,21 +13,17 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Iterator;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
-@EnableWebMvc
 public class Application {
     
     @Autowired
@@ -35,7 +31,7 @@ public class Application {
     @Autowired
     private EchoNestClient echoNestClient;
 
-    @PostConstruct
+//    @PostConstruct
     public void run() {
     	// get track data from SoundCloud
     	JsonNode soundCloudTrack = soundCloudClient.getTrackAsJsonNode("138111002");
