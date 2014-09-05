@@ -26,6 +26,10 @@ public class Clip {
 		return warpMarkers;
 	}
 
+	public boolean hasWarpMarkers() {
+		return !warpMarkers.isEmpty();
+	}
+	
 	public String getName() {
 		return name;
 	}
