@@ -23,7 +23,9 @@ App.IndexController = Ember.Controller.extend({
 		}.bind(this));
 	},
 	actions: {
-
+		submitTrack: function(track) {
+			$.post("/service/als", {soundcloudTrackId: track.id});
+		},
 	},
 
 });
