@@ -1,3 +1,24 @@
 .ember-application {
     margin: 20px;
 }
+
+.widget {
+	height: 100px;
+}
+.widget .artwork {
+	width: 100px;
+	height: 100px;
+}
+.widget .player {
+	width: calc(100% - 100px);
+	padding: 0 5px;
+}
+.widget .player audio {
+	width: 100%;
+	height: 30px;
+}
+.widget .player .waveform {
+	width: 100%;
+	height: 70px;
+	background-color: #333;
+}

@@ -1,13 +1,19 @@
 App = Ember.Application.create({
-    LOG_TRANSITIONS: true
+    LOG_TRANSITIONS: true,
+    SOUNDCLOUD_ID: "f30741a5f09f5411b4768bac02327967",
 });
 
 App.Router.reopen({
     location: 'history'
 });
 
-App.constants = Ember.Object.extend({
-    name: 'Mash for Live'
+App.Constants = Ember.Object.extend({
+    name: 'Mash for Live',
+});
+
+SC.initialize({
+	client_id: App.SOUNDCLOUD_ID,
+	redirect_uri: "http://nope.nope.nope/",
 });
 
 App.Router.map(function() {
@@ -22,7 +28,7 @@ App.IndexRoute = Ember.Route.extend({
 
 App.ApplicationView = Ember.View.extend({
     templateName: 'application',
-    nameBinding: 'App.constants.name'
+    nameBinding: 'App.Constants.name'
 });
 
 Handlebars.registerHelper('loop', function(count, options) {

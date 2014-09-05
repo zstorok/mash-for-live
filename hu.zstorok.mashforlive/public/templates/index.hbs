@@ -1,23 +1,20 @@
 <div class="container-fluid">
-<div class="page-header">
-	<h1>Songs</h1>
-</div>
+	<div class="page-header">
+	</div>
 
-<div class="row">
-    <div class="col-xs-12">
-    	<div class="input-group">
-			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-search"></span>
-			</span>
-			{{input class="form-control" placeholder="Search Soundcloud" value=soundCloudSearch}}
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="input-group">
+				<span class="input-group-addon"> <span
+					class="glyphicon glyphicon-search"></span>
+				</span> {{input class="form-control" placeholder="Search Soundcloud"
+				value=soundCloudSearch}}
+			</div>
 		</div>
-    </div>
-    <hr>
-	{{#each item in model}}
-		<div class="col-md-6">
-		     {{item}}
-		</div>
-	{{/each}}
-</div>
+		<hr>
+		{{#each i in results}}
+			{{soundcloud-player track=i}}
+		{{/each}}
+	</div>
 
 </div>

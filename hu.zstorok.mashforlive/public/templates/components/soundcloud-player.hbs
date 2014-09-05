@@ -1,0 +1,10 @@
+<h3><span class="text-muted">{{track.user.username}} </span>{{track.title}}</h3>
+<div class="widget clearfix">
+	<img class="artwork pull-left" {{bind-attr src=track.artwork_url}}>
+	<div class="player pull-right">
+		<img class="waveform" {{bind-attr src=track.waveform_url}}>
+		<audio class="center-block" controls preload="none"
+				{{bind-attr src=authStreamUrl}}>
+		</audio>
+	</div>
+</div>

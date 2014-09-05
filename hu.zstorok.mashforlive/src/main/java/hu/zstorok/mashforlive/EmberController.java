@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmberController {
 	private final boolean debug = true;
-    private final Path basePath = Paths.get("public/");
+	private final Path basePath = Paths.get("public/");
 
 	@RequestMapping(value = "/index.html")
 	public void index(HttpServletResponse res) throws IOException {
@@ -42,49 +42,61 @@ public class EmberController {
 	}
 
 	@RequestMapping(value = "/js/templates.js", produces = "application/javascript; charset=utf-8")
-    public void templates(HttpServletResponse res) throws IOException {
-        Path ts = basePath.resolve("templates/");
-        System.out.println(ts);
-        Files.find(ts, 10,
-                (path, attr) -> path.toString().endsWith(".hbs")
-                        && attr.isRegularFile())
-                .forEach((f) -> {
-                    System.out.println(f);
-                    try {
-                        String name = ts.relativize(f).toString()
-                                .replaceFirst("\\.hbs$", "");
-                        String templ = StringEscapeUtils.escapeEcmaScript(
-                                FileUtils.readFileToString(f.toFile()));
-                        res.getWriter().append("Ember.TEMPLATES['" + name + "'] = ")
-                                .append("Ember.Handlebars.compile(\""+templ+"\");");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-    }
-    
-    @RequestMapping(value = "/js/all.js", produces = "application/javascript; charset=utf-8")
-    public void javascripts(HttpServletResponse res) throws IOException {
-        Path ts = basePath.resolve("js/");
-        getJavascripts().forEach((f) -> {
-            System.out.println(f);
-            try {
-                res.getWriter().append("// ").append(ts.relativize(f)
-                        .toString()).append("\n");
-                IOUtils.copy(Files.newBufferedReader(f), res.getWriter());
-                res.getWriter().append("\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-    
-    private Stream<Path> getJavascripts() throws IOException {
-        Path ts = basePath.resolve("js/");
-        return Files.find(ts, 10, //TODO sort files when accumulating
-                (path, attr) -> path.toString().endsWith(".js")
-                        && attr.isRegularFile()
-                        && !path.startsWith(basePath.resolve("js/libs"))
-                        && !path.startsWith(basePath.resolve("js/app.js")));
-    }
+	public void templates(HttpServletResponse res) throws IOException {
+		Path ts = basePath.resolve("templates/");
+		System.out.println(ts);
+		Files.find(
+				ts,
+				10,
+				(path, attr) -> path.toString().endsWith(".hbs")
+						&& attr.isRegularFile())
+				.forEach(
+						(f) -> {
+							System.out.println(f);
+							try {
+								String name = ts.relativize(f).toString()
+										.replace('\\', '/')
+										.replaceFirst("\\.hbs$", "");
+								String templ = StringEscapeUtils
+										.escapeEcmaScript(FileUtils
+												.readFileToString(f.toFile()));
+								res.getWriter()
+										.append("Ember.TEMPLATES['" + name
+												+ "'] = ")
+										.append("Ember.Handlebars.compile(\""
+												+ templ + "\");");
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						});
+	}
+
+	@RequestMapping(value = "/js/all.js", produces = "application/javascript; charset=utf-8")
+	public void javascripts(HttpServletResponse res) throws IOException {
+		Path ts = basePath.resolve("js/");
+		getJavascripts().forEach(
+				(f) -> {
+					System.out.println(f);
+					try {
+						res.getWriter().append("// ")
+								.append(ts.relativize(f).toString())
+								.append("\n");
+						IOUtils.copy(Files.newBufferedReader(f),
+								res.getWriter());
+						res.getWriter().append("\n");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				});
+	}
+
+	private Stream<Path> getJavascripts() throws IOException {
+		Path ts = basePath.resolve("js/");
+		return Files.find(ts,
+				10, // TODO sort files when accumulating
+				(path, attr) -> path.toString().endsWith(".js")
+						&& attr.isRegularFile()
+						&& !path.startsWith(basePath.resolve("js/libs"))
+						&& !path.startsWith(basePath.resolve("js/app.js")));
+	}
 }
