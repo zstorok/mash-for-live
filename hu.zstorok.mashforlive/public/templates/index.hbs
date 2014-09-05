@@ -13,7 +13,13 @@
 		</div>
 		<hr>
 		{{#each i in results}}
-			{{soundcloud-player track=i}}
+			{{#soundcloud-player track=i}}
+			<div class="submitTrack pull-right">
+				<button class="btn btn-success" {{action "submitTrack" i}}>
+					<span class="glyphicon glyphicon-music"></span>
+				</button>
+			</div>
+			{{/soundcloud-player}}
 		{{/each}}
 	</div>
 
