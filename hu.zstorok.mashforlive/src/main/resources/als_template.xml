@@ -301,33 +301,15 @@
 													<HasRelativePath Value="true" />
 													<RelativePathType Value="1" />
 													<RelativePath>
-														<RelativePathElement Dir="" />
-														<RelativePathElement Dir="" />
-														<RelativePathElement Dir="" />
-														<RelativePathElement Dir="" />
-														<RelativePathElement Dir="Downloads" />
+														<RelativePathElement Dir="Samples" />
 													</RelativePath>
 													<Name Value="01 Proxy (Original Mix).mp3" />
 													<Type Value="2" />
-													<Data>
-														0000000001B6000200000C4D6163696E746F7368204844000000000000000000000000000000CE76
-														00A0482B00000006EA011B30312050726F787920284F726967696E616C204D6978292E6D70330000
-														00000000000000000000000000000000000000000000000000000000000000000000007C9B7AD014
-														5D3A0000000000000000FFFFFFFF0000092000000000000000000000000000000009446F776E6C6F
-														61647300001000080000CE75E4800000001100080000D014411A00000001000C0006EA010006E9FE
-														00026491000200434D6163696E746F73682048443A55736572733A007A73746F726F6B3A00446F77
-														6E6C6F6164733A0030312050726F787920284F726967696E616C204D6978292E6D703300000E0038
-														001B00300031002000500072006F0078007900200028004F0072006900670069006E0061006C0020
-														004D006900780029002E006D00700033000F001A000C004D006100630069006E0074006F00730068
-														0020004800440012003355736572732F7A73746F726F6B2F446F776E6C6F6164732F30312050726F
-														787920284F726967696E616C204D6978292E6D703300001300012F0000150002000EFFFF0000
-													</Data>
+													<Data />
 													<RefersToFolder Value="false" />
 													<SearchHint>
 														<PathHint>
-															<RelativePathElement Dir="Users" />
-															<RelativePathElement Dir="zstorok" />
-															<RelativePathElement Dir="Downloads" />
+															<RelativePathElement Dir="Samples" />
 														</PathHint>
 														<FileSize Value="11547234" />
 														<Crc Value="26108" />
