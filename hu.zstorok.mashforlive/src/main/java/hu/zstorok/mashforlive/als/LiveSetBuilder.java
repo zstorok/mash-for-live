@@ -1,5 +1,7 @@
 package hu.zstorok.mashforlive.als;
 
+import hu.zstorok.mashforlive.client.EchoNestAnalysis;
+
 import java.util.Iterator;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,7 +14,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class LiveSetBuilder implements ILiveSetBuilder {
 	
 	@Override
-	public LiveSet build(JsonNode echoNestAnalysis) {
+	public LiveSet build(EchoNestAnalysis echoNestAnalysis) {
+		System.out.println(echoNestAnalysis);
 		throw new UnsupportedOperationException("Not implemented.");
 	}
 	

@@ -1,10 +1,9 @@
 package hu.zstorok.mashforlive.als;
 
 import hu.zstorok.mashforlive.als.Clip.WarpMarker;
+import hu.zstorok.mashforlive.client.EchoNestAnalysis;
 
 import java.util.Arrays;
-
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Mock Ableton Live set builder implementation.
@@ -14,7 +13,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class MockLiveSetBuilder implements ILiveSetBuilder {
 
 	@Override
-	public LiveSet build(JsonNode echoNestAnalysis) {
+	public LiveSet build(EchoNestAnalysis echoNestAnalysis) {
 		Track track1 = new Track("track1");
 		track1.getClips().add(
 				new Clip("clip1", "1", "2", Arrays.asList(new WarpMarker("0",

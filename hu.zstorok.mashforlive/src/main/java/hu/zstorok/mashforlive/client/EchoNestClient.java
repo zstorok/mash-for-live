@@ -9,11 +9,13 @@ import static hu.zstorok.mashforlive.client.EchoNestConstants.TRACK_UPLOAD_URL_T
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Service to encapsulate the interaction with the EchoNest API.
@@ -23,6 +25,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 @Service
 public class EchoNestClient {
 
+	@Autowired
+	private ObjectMapper mapper;
 	private final RestTemplate restTemplate = new RestTemplate();
 
 	public JsonNode uploadTrack(String url) {
@@ -44,11 +48,13 @@ public class EchoNestClient {
 		return status;
 	}
 
-	public JsonNode getAnalysisAsJsonNode(String analysisUrl, String trackId) {
+	public EchoNestAnalysis getAnalysis(String analysisUrl, String trackId) {
 		System.out.println(analysisUrl);
 		try {
 			URI uri = new URI(analysisUrl);
-			return new RestTemplate().getForObject(uri, JsonNode.class);
+			EchoNestAnalysis response = new RestTemplate().getForObject(uri,
+					EchoNestAnalysis.class);
+			return response;
 		} catch (RestClientException e) {
 			if (e.getMessage().contains("404")) {
 				EchoNestTrackStatus status;
@@ -67,7 +73,7 @@ public class EchoNestClient {
 					throw new WebServiceClientException(
 							"Submit error, track has never been received", e);
 				case complete:
-					return getAnalysisAsJsonNode(analysisUrl, trackId);
+					return getAnalysis(analysisUrl, trackId);
 				case error:
 				default:
 					throw new WebServiceClientException(e);

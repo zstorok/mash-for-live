@@ -1,6 +1,6 @@
 package hu.zstorok.mashforlive.als;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import hu.zstorok.mashforlive.client.EchoNestAnalysis;
 
 /**
  * Interface for Ableton Live set builders.
@@ -15,5 +15,5 @@ public interface ILiveSetBuilder {
 	 * @param echoNestAnalysis the EchoNest JSON data 
 	 * @return the Ableton Live set model
 	 */
-	LiveSet build(JsonNode echoNestAnalysis);
+	LiveSet build(EchoNestAnalysis echoNestAnalysis);
 }

@@ -3,6 +3,7 @@ package hu.zstorok.mashforlive.controller;
 import hu.zstorok.mashforlive.als.ILiveSetBuilder;
 import hu.zstorok.mashforlive.als.LiveSet;
 import hu.zstorok.mashforlive.als.LiveSetGenerator;
+import hu.zstorok.mashforlive.client.EchoNestAnalysis;
 import hu.zstorok.mashforlive.client.EchoNestClient;
 import hu.zstorok.mashforlive.client.SoundCloudClient;
 import hu.zstorok.mashforlive.client.SoundCloudConstants;
@@ -78,7 +79,8 @@ public class MashForLiveService {
 		String echoNestAnalysisUrl = echoNestTrackAudioSummaryResponse.get("track").get("audio_summary")
 				.get("analysis_url").asText();
 		// get EchoNest track analysis data
-		JsonNode echoNestAnalysis = echoNestClient.getAnalysisAsJsonNode(echoNestAnalysisUrl, echoNestTrackId);
+		EchoNestAnalysis echoNestAnalysis = echoNestClient.getAnalysis(
+				echoNestAnalysisUrl, echoNestTrackId);
 
 		LiveSet liveSet = liveSetBuilder.build(echoNestAnalysis);
 		byte[] alsBytes = liveSetGenerator.generateAls(liveSet);
@@ -168,7 +170,8 @@ public class MashForLiveService {
 		String echoNestAnalysisUrl = echoNestTrackAudioSummaryResponse.get("track").get("audio_summary")
 				.get("analysis_url").asText();
 		// get EchoNest track analysis data
-		JsonNode echoNestAnalysis = echoNestClient.getAnalysisAsJsonNode(echoNestAnalysisUrl, echoNestTrackId);
+		EchoNestAnalysis echoNestAnalysis = echoNestClient.getAnalysis(
+				echoNestAnalysisUrl, echoNestTrackId);
 
 		LiveSet liveSet = liveSetBuilder.build(echoNestAnalysis);
 		return liveSetGenerator.generateAls(liveSet);
