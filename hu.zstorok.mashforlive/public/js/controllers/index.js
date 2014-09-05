@@ -1,6 +1,7 @@
 App.IndexController = Ember.Controller.extend({
 	
 	results: null,
+	downloading: false,
 	
 	init: function() {
 
@@ -22,7 +23,7 @@ App.IndexController = Ember.Controller.extend({
 			for (i in tracks) { if (tracks.hasOwnProperty(i)){
 				var t = tracks[i];
 				if (t.downloadable) {
-					nres.push(t);
+					nres.push(Ember.Object.create(t));
 				}
 			}}
 			console.debug(nres)
@@ -31,7 +32,17 @@ App.IndexController = Ember.Controller.extend({
 	},
 	actions: {
 		submitTrack: function(track) {
-			$.post("/service/als", {soundCloudTrackId: track.id});
+			track.set("downloading", true);
+			$.post("/service/als", {soundCloudTrackId: track.id})
+				.done(function() {
+					console.log("done");
+				})
+				.fail(function(err){
+					console.log("failed", err);
+				})
+				.always(function(){
+					track.set("downloading", false);
+				});
 		},
 	},
 

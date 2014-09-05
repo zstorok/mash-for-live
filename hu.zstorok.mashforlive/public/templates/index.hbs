@@ -16,7 +16,11 @@
 			{{#soundcloud-player track=i}}
 			<div class="submitTrack pull-right">
 				<button class="btn btn-success" {{action "submitTrack" i}}>
+					{{#if i.downloading}}
+					<span class="glyphicon glyphicon-repeat rotate"></span>
+					{{else}}
 					<span class="glyphicon glyphicon-music"></span>
+					{{/if}}
 				</button>
 			</div>
 			{{/soundcloud-player}}
