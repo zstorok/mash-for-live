@@ -8,9 +8,11 @@ import hu.zstorok.mashforlive.client.SoundCloudClient;
 import hu.zstorok.mashforlive.client.SoundCloudConstants;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -33,9 +35,13 @@ public class MashForLiveService {
     private ILiveSetBuilder liveSetBuilder;
 
 	@RequestMapping(value="/service/als", method=RequestMethod.POST, produces="application/octet-stream")
-	public @ResponseBody byte[] getAbletonLiveSet(String soundCloudTrackId) {
+	public @ResponseBody byte[] getAbletonLiveSet(String soundCloudTrackId)
+			throws NotDownloadableException {
     	// get track data from SoundCloud
     	JsonNode soundCloudTrack = soundCloudClient.getTrackAsJsonNode(soundCloudTrackId);
+    	if (soundCloudTrack.get("download_url") == null) {
+			throw new NotDownloadableException();
+    	}
     	String soundCloudTrackDownloadLink = soundCloudTrack.get("download_url").asText();
     	
     	// upload track to EchoNest
@@ -52,5 +58,16 @@ public class MashForLiveService {
     	LiveSet liveSet = liveSetBuilder.build(echoNestAnalysis);
 		return liveSetGenerator.generateAls(liveSet);
 	}
-	
+
+	@ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Track is not downloadable")
+	@SuppressWarnings("serial")
+	static class NotDownloadableException extends Exception {
+		public NotDownloadableException() {
+			super();
+		}
+
+		public NotDownloadableException(String arg0) {
+			super(arg0);
+		}
+	}
 }

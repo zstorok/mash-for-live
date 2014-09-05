@@ -18,13 +18,20 @@ App.IndexController = Ember.Controller.extend({
 				console.error(error);
 				return;
 			}
-			console.debug(tracks)
-			this.set("results", tracks);
+			var nres = []
+			for (i in tracks) { if (tracks.hasOwnProperty(i)){
+				var t = tracks[i];
+				if (t.downloadable) {
+					nres.push(t);
+				}
+			}}
+			console.debug(nres)
+			this.set("results", nres);
 		}.bind(this));
 	},
 	actions: {
 		submitTrack: function(track) {
-			$.post("/service/als", {soundcloudTrackId: track.id});
+			$.post("/service/als", {soundCloudTrackId: track.id});
 		},
 	},
 

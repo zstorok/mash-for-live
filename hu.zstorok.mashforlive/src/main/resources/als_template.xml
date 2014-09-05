@@ -230,7 +230,9 @@
 											<LomId Value="0" />
 											<LomIdView Value="0" />
 											<WarpMarkers>
-												<WarpMarker SecTime="0" BeatTime="0" />
+												{{#getWarpMarkers}}
+												<WarpMarker SecTime="{{getSecTime}}" BeatTime="{{getBeatTime}}" />
+												{{/getWarpMarkers}}
 											</WarpMarkers>
 											<MarkersGenerated Value="false" />
 											<CurrentStart Value="0" />

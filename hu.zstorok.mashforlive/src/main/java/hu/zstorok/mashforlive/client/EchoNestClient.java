@@ -38,7 +38,15 @@ public class EchoNestClient {
 			URI uri = new URI(analysisUrl);
 			return new RestTemplate().getForObject(uri, JsonNode.class);
 		} catch (RestClientException e) {
-			throw new WebServiceClientException(e);
+			if (e.getMessage().contains("404")) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+				}
+				return getAnalysisAsJsonNode(analysisUrl);
+			} else {
+				throw new WebServiceClientException(e);
+			}
 		} catch (URISyntaxException e) {
 			throw new WebServiceClientException(e);
 		}

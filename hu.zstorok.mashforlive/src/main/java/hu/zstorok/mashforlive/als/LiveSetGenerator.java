@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.zip.GZIPOutputStream;
 
 import org.springframework.stereotype.Service;
@@ -63,8 +64,8 @@ public class LiveSetGenerator {
 	public static void main(String[] args) throws IOException {
 		LiveSetGenerator liveSetGenerator = new LiveSetGenerator();
 		Track track1 = new Track("track1");
-		track1.getClips().add(new Clip("clip1", "1", "2"));
-		track1.getClips().add(new Clip("clip2", "3", "4"));
+		track1.getClips().add(new Clip("clip1", "1", "2", Arrays.asList()));
+		track1.getClips().add(new Clip("clip2", "3", "4", Arrays.asList()));
 		LiveSet liveSet = new LiveSet(120);
 		liveSet.getTracks().add(track1);
 		byte[] compressedBytes = liveSetGenerator.generateAls(liveSet);
