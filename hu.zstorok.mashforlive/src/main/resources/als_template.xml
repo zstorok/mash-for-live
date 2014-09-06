@@ -8,7 +8,7 @@
 		<LomIdView Value="0" />
 		<Tracks>
 			{{#getTracks}}
-			<AudioTrack Id="15">
+			<AudioTrack Id="{{getId}}">
 				<LomId Value="0" />
 				<LomIdView Value="0" />
 				<EnvelopeModePreferred Value="false" />
@@ -222,6 +222,7 @@
 						</SourceContext>
 						<ClipSlotList>
 							{{#getClips}}
+							{{^isEmpty}}
 							<ClipSlot>
 								<LomId Value="0" />
 								<ClipSlot>
@@ -273,7 +274,7 @@
 												<OtherTime Value="0" />
 											</TimeSelection>
 											<Legato Value="false" />
-											<Ram Value="false" />
+											<Ram Value="true" />
 											<GrooveSettings>
 												<GrooveId Value="-1" />
 											</GrooveSettings>
@@ -368,6 +369,17 @@
 								<HasStop Value="true" />
 								<NeedRefreeze Value="true" />
 							</ClipSlot>
+							{{/isEmpty}}
+							{{#isEmpty}}
+							<ClipSlot>
+								<LomId Value="0" />
+								<ClipSlot>
+									<Value />
+								</ClipSlot>
+								<HasStop Value="true" />
+								<NeedRefreeze Value="true" />
+							</ClipSlot>
+							{{/isEmpty}}
 							{{/getClips}}
 						</ClipSlotList>
 						<MonitoringEnum Value="2" />

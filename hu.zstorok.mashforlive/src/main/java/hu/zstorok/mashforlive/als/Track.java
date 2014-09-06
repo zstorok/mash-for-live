@@ -10,10 +10,13 @@ import com.google.common.collect.Lists;
  * @author zstorok
  */
 public class Track {
+	private final int id;
 	private final String name;
 	private final List<Clip> clips = Lists.newArrayList();
 
-	public Track(String name) {
+	public Track(int id, String name) {
+		System.out.println("Track.Track(" + id + ", " + name + ")");
+		this.id = id;
 		this.name = name;
 	}
 	
@@ -24,4 +27,14 @@ public class Track {
 	public String getName() {
 		return name;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "Track [id=" + id + ", name=" + name + "]";
+	}
+	
 }

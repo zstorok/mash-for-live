@@ -10,10 +10,10 @@ import com.google.common.collect.Lists;
  * @author zstorok
  */
 public class LiveSet {
-	private final float tempo;
+	private final double tempo;
 	private final List<Track> tracks = Lists.newArrayList();
 	
-	public LiveSet(float tempo) {
+	public LiveSet(double tempo) {
 		this.tempo = tempo;
 	}
 	
@@ -21,7 +21,7 @@ public class LiveSet {
 		return tracks;
 	}
 	
-	public float getTempo() {
+	public double getTempo() {
 		return tempo;
 	}
 
@@ -37,4 +37,10 @@ public class LiveSet {
 		}
 		return scenes;
 	}
+
+	@Override
+	public String toString() {
+		return "LiveSet [tempo=" + tempo + ", tracks=" + tracks + "]";
+	}
+	
 }

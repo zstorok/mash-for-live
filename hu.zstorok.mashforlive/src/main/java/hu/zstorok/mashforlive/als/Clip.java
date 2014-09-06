@@ -1,5 +1,6 @@
 package hu.zstorok.mashforlive.als;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,13 +10,20 @@ import java.util.List;
  */
 public class Clip {
 
+	private final int id;
 	private final String name;
-	private final String startPos;
-	private final String endPos;
+	private final double startPos;
+	private final double endPos;
 	private final List<WarpMarker> warpMarkers;
 
-	public Clip(String name, String startPos, String endPos,
+	public Clip() {
+		this(-1, null, -1, -1, Collections.emptyList());
+	}
+	
+	public Clip(int id, String name, double startPos, double endPos,
 			List<WarpMarker> warpMarkers) {
+		System.out.println("Clip.Clip(" + name + ", " + startPos + ", " + endPos + ", " + warpMarkers + ")");
+		this.id = id;
 		this.name = name;
 		this.startPos = startPos;
 		this.endPos = endPos;
@@ -30,33 +38,47 @@ public class Clip {
 		return !warpMarkers.isEmpty();
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 	public String getName() {
 		return name;
 	}
 	
-	public String getStartPos() {
+	public double getStartPos() {
 		return startPos;
 	}
 	
-	public String getEndPos() {
+	public double getEndPos() {
 		return endPos;
 	}
 
 	public static class WarpMarker {
-		private final String secTime;
-		private final String beatTime;
-
-		public WarpMarker(String secTime, String beatTime) {
+		private final double secTime;
+		private final int beatTime;
+		
+		public WarpMarker(double secTime, int beatTime) {
 			this.secTime = secTime;
 			this.beatTime = beatTime;
 		}
 
-		public String getSecTime() {
+		public double getSecTime() {
 			return secTime;
 		}
 
-		public String getBeatTime() {
+		public int getBeatTime() {
 			return beatTime;
 		}
 	}
+
+	public boolean isEmpty() {
+		return id == -1;
+	}
+	
+	@Override
+	public String toString() {
+		return "Clip [id=" + id + ", name=" + name + ", startPos=" + startPos + ", endPos=" + endPos + "]";
+	}
+	
 }

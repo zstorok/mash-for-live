@@ -66,9 +66,9 @@ public class LiveSetGenerator {
 
 	public static void main(String[] args) throws IOException {
 		LiveSetGenerator liveSetGenerator = new LiveSetGenerator();
-		Track track1 = new Track("track1");
-		track1.getClips().add(new Clip("clip1", "1", "2", Arrays.asList()));
-		track1.getClips().add(new Clip("clip2", "3", "4", Arrays.asList()));
+		Track track1 = new Track(1, "track1");
+		track1.getClips().add(new Clip(1, "clip1", 1, 2, Arrays.asList()));
+		track1.getClips().add(new Clip(2, "clip2", 3, 4, Arrays.asList()));
 		LiveSet liveSet = new LiveSet(120);
 		liveSet.getTracks().add(track1);
 		byte[] compressedBytes = liveSetGenerator.generateAls(liveSet);
