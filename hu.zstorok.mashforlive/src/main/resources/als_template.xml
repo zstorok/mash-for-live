@@ -253,7 +253,7 @@
 											{{#getColor}}
 											<ColorIndex Value="{{toString}}" />
 											{{/getColor}}
-											<LaunchMode Value="0" />
+											<LaunchMode Value="2" />
 											<LaunchQuantisation Value="0" />
 											<TimeSignature>
 												<TimeSignatures>
