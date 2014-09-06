@@ -15,7 +15,6 @@ public class Track {
 	private final List<Clip> clips = Lists.newArrayList();
 
 	public Track(int id, String name) {
-		System.out.println("Track.Track(" + id + ", " + name + ")");
 		this.id = id;
 		this.name = name;
 	}
