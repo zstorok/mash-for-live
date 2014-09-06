@@ -17,19 +17,22 @@ public class Clip {
 	private final List<WarpMarker> warpMarkers;
 	private final String sampleFileName;
 	private final ClipColor color;
+	private final boolean repeat;
 
 	public Clip() {
-		this(-1, null, null, -1, -1, Collections.emptyList(), ClipColor.Orange);
+		this(-1, null, null, -1, -1, Collections.emptyList(), ClipColor.Orange,
+				true);
 	}
 	
 	public Clip(int id, String name, String sampleFileName, double startPos,
 			double endPos, List<WarpMarker> warpMarkers) {
 		this(id, name, sampleFileName, startPos, endPos, warpMarkers, ClipColor
-				.random());
+				.random(), true);
 	}
 
 	public Clip(int id, String name, String sampleFileName, double startPos,
-			double endPos, List<WarpMarker> warpMarkers, ClipColor color) {
+			double endPos, List<WarpMarker> warpMarkers, ClipColor color,
+			boolean repeat) {
 		this.id = id;
 		this.name = name;
 		this.sampleFileName = sampleFileName;
@@ -37,6 +40,7 @@ public class Clip {
 		this.endPos = endPos;
 		this.warpMarkers = warpMarkers;
 		this.color = color;
+		this.repeat = repeat;
 	}
 
 	public List<WarpMarker> getWarpMarkers() {
@@ -69,6 +73,14 @@ public class Clip {
 
 	public ClipColor getColor() {
 		return color;
+	}
+
+	public boolean isRepeat() {
+		return repeat;
+	}
+
+	public boolean isNotRepeat() {
+		return !repeat;
 	}
 
 	public static class WarpMarker {

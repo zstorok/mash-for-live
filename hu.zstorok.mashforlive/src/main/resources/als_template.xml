@@ -282,11 +282,20 @@
 											</GrooveSettings>
 											<Disabled Value="false" />
 											<VelocityAmount Value="0" />
+											{{#isRepeat}}
+											<FollowTime Value="4" />
+											<FollowActionA Value="2" />
+											<FollowActionB Value="0" />
+											<FollowChanceA Value="1" />
+											<FollowChanceB Value="0" />
+											{{/isRepeat}}
+											{{#isNotRepeat}}
 											<FollowTime Value="4" />
 											<FollowActionA Value="0" />
 											<FollowActionB Value="0" />
 											<FollowChanceA Value="1" />
 											<FollowChanceB Value="0" />
+											{{/isNotRepeat}}
 											<Grid>
 												<FixedNumerator Value="1" />
 												<FixedDenominator Value="16" />
