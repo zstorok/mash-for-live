@@ -250,7 +250,9 @@
 											</Loop>
 											<Name Value="{{getName}}" />
 											<Annotation Value="" />
-											<ColorIndex Value="58" />
+											{{#getColor}}
+											<ColorIndex Value="{{toString}}" />
+											{{/getColor}}
 											<LaunchMode Value="0" />
 											<LaunchQuantisation Value="0" />
 											<TimeSignature>

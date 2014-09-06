@@ -16,19 +16,27 @@ public class Clip {
 	private final double endPos;
 	private final List<WarpMarker> warpMarkers;
 	private final String sampleFileName;
+	private final ClipColor color;
 
 	public Clip() {
-		this(-1, null, null, -1, -1, Collections.emptyList());
+		this(-1, null, null, -1, -1, Collections.emptyList(), ClipColor.Orange);
 	}
 	
 	public Clip(int id, String name, String sampleFileName, double startPos,
 			double endPos, List<WarpMarker> warpMarkers) {
+		this(id, name, sampleFileName, startPos, endPos, warpMarkers,
+				ClipColor.Orange);
+	}
+
+	public Clip(int id, String name, String sampleFileName, double startPos,
+			double endPos, List<WarpMarker> warpMarkers, ClipColor color) {
 		this.id = id;
 		this.name = name;
 		this.sampleFileName = sampleFileName;
 		this.startPos = startPos;
 		this.endPos = endPos;
 		this.warpMarkers = warpMarkers;
+		this.color = color;
 	}
 
 	public List<WarpMarker> getWarpMarkers() {
@@ -59,6 +67,10 @@ public class Clip {
 		return endPos;
 	}
 
+	public ClipColor getColor() {
+		return color;
+	}
+
 	public static class WarpMarker {
 		private final double secTime;
 		private final int beatTime;
@@ -84,7 +96,21 @@ public class Clip {
 	@Override
 	public String toString() {
 		return "Clip [id=" + id + ", name=" + name + ", startPos=" + startPos + ", endPos=" + endPos
-				+ ", sampleFileName=" + sampleFileName + "]";
+				+ ", sampleFileName=" + sampleFileName + ", color=" + color + "]";
 	}
 	
+	public static enum ClipColor {
+		Red("12"), Green("16"), Yellow("38"), Orange("36");
+
+		private String value;
+
+		private ClipColor(String value) {
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return value;
+		}
+	}
 }
