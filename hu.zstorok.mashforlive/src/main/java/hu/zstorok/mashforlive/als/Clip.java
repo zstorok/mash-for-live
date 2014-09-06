@@ -24,8 +24,8 @@ public class Clip {
 	
 	public Clip(int id, String name, String sampleFileName, double startPos,
 			double endPos, List<WarpMarker> warpMarkers) {
-		this(id, name, sampleFileName, startPos, endPos, warpMarkers,
-				ClipColor.Orange);
+		this(id, name, sampleFileName, startPos, endPos, warpMarkers, ClipColor
+				.random());
 	}
 
 	public Clip(int id, String name, String sampleFileName, double startPos,
@@ -111,6 +111,21 @@ public class Clip {
 		@Override
 		public String toString() {
 			return value;
+		}
+
+		public static ClipColor random() {
+			double r = Math.random();
+			ClipColor c;
+			if (r < 0.25) {
+				c = ClipColor.Green;
+			} else if (r < 0.5) {
+				c = ClipColor.Orange;
+			} else if (r < 0.75) {
+				c = ClipColor.Red;
+			} else {
+				c = ClipColor.Yellow;
+			}
+			return c;
 		}
 	}
 }

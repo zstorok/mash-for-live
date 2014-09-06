@@ -37,8 +37,9 @@ App.IndexController = Ember.Controller.extend({
 				.done(function(data) {
 					console.log("done");
 					console.log("Download URL: " + data)
-					document.body.innerHTML += "<iframe src='" + data + "' style='display: none;' ></iframe>"
-				})
+					var iframe = $("<iframe src='" + data + "' style='display: none;' ></iframe>");
+					iframe.appendTo(document.body);
+				}.bind(this))
 				.fail(function(err){
 					console.log("failed", err);
 				})
