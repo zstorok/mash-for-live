@@ -149,7 +149,7 @@ public class MashForLiveService {
 			ZipEntry alsFileEntry = new ZipEntry(ALS_FILE_RELATIVE_PATH);
 			zipOutputStream.putNextEntry(alsFileEntry);
 			zipOutputStream.write(alsBytes);
-			return "http://localhost:8080/service/zip/" + tempZipId;
+			return "/service/zip/" + tempZipId;
 		} catch (IOException e) {
 			throw new DownloadFailedException("Error when generating project ZIP file.");
 		} finally {
