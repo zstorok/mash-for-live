@@ -15,16 +15,17 @@ public class Clip {
 	private final double startPos;
 	private final double endPos;
 	private final List<WarpMarker> warpMarkers;
+	private final String sampleFileName;
 
 	public Clip() {
-		this(-1, null, -1, -1, Collections.emptyList());
+		this(-1, null, null, -1, -1, Collections.emptyList());
 	}
 	
-	public Clip(int id, String name, double startPos, double endPos,
-			List<WarpMarker> warpMarkers) {
-		System.out.println("Clip.Clip(" + name + ", " + startPos + ", " + endPos + ", " + warpMarkers + ")");
+	public Clip(int id, String name, String sampleFileName, double startPos,
+			double endPos, List<WarpMarker> warpMarkers) {
 		this.id = id;
 		this.name = name;
+		this.sampleFileName = sampleFileName;
 		this.startPos = startPos;
 		this.endPos = endPos;
 		this.warpMarkers = warpMarkers;
@@ -44,6 +45,10 @@ public class Clip {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public String getSampleFileName() {
+		return sampleFileName;
 	}
 	
 	public double getStartPos() {
@@ -78,7 +83,8 @@ public class Clip {
 	
 	@Override
 	public String toString() {
-		return "Clip [id=" + id + ", name=" + name + ", startPos=" + startPos + ", endPos=" + endPos + "]";
+		return "Clip [id=" + id + ", name=" + name + ", startPos=" + startPos + ", endPos=" + endPos
+				+ ", sampleFileName=" + sampleFileName + "]";
 	}
 	
 }

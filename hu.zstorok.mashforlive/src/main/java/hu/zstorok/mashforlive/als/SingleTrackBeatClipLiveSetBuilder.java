@@ -16,7 +16,7 @@ import java.util.List;
 public class SingleTrackBeatClipLiveSetBuilder implements ILiveSetBuilder {
 
 	@Override
-	public LiveSet build(EchoNestAnalysis echoNestAnalysis) {
+	public LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName) {
 		System.out.println(echoNestAnalysis);
 		EchoNestAnalysis.Track track = echoNestAnalysis.getTrack();
 		LiveSet liveSet = new LiveSet(track.getTempo());
@@ -27,7 +27,7 @@ public class SingleTrackBeatClipLiveSetBuilder implements ILiveSetBuilder {
 			Beat beat = beats.get(i);
 			double clipStart = beat.getStart();
 			double clipEnd = clipStart + beat.getDuration();
-			liveSetTrackClips.add(new Clip(i, "clip " + i, clipStart, clipEnd, buildWarpMarkers(echoNestAnalysis)));
+			liveSetTrackClips.add(new Clip(i, "clip " + i, sampleFileName, clipStart, clipEnd, buildWarpMarkers(echoNestAnalysis)));
 		}
 		liveSet.getTracks().add(liveSetTrack);
 		return liveSet;

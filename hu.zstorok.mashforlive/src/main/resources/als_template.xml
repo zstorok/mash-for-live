@@ -304,7 +304,7 @@
 													<RelativePath>
 														<RelativePathElement Dir="Samples" />
 													</RelativePath>
-													<Name Value="01 Proxy (Original Mix).mp3" />
+													<Name Value="{{getSampleFileName}}" />
 													<Type Value="2" />
 													<Data />
 													<RefersToFolder Value="false" />

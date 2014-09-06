@@ -34,8 +34,10 @@ App.IndexController = Ember.Controller.extend({
 		submitTrack: function(track) {
 			track.set("downloading", true);
 			$.post("/service/zip", {soundCloudTrackId: track.id})
-				.done(function() {
+				.done(function(data) {
 					console.log("done");
+					console.log("Download URL: " + data)
+					document.body.innerHTML += "<iframe src='" + data + "' style='display: none;' ></iframe>"
 				})
 				.fail(function(err){
 					console.log("failed", err);

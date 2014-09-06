@@ -18,7 +18,7 @@ public class MultiTrackBarClipLiveSetBuilder implements ILiveSetBuilder {
 	private static final int NUMBER_OF_TRACKS = 8;
 
 	@Override
-	public LiveSet build(EchoNestAnalysis echoNestAnalysis) {
+	public LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName) {
 		EchoNestAnalysis.Track track = echoNestAnalysis.getTrack();
 		LiveSet liveSet = new LiveSet(track.getTempo());
 		List<Bar> bars = echoNestAnalysis.getBars();
@@ -37,7 +37,7 @@ public class MultiTrackBarClipLiveSetBuilder implements ILiveSetBuilder {
 			List<WarpMarker> warpMarkers = buildWarpMarkers(echoNestAnalysis);
 			double clipStart = bar.getStart();
 			double clipEnd = clipStart + bar.getDuration();
-			liveSetTrack.getClips().add(new Clip(i, "clip " + i, clipStart, clipEnd, warpMarkers));
+			liveSetTrack.getClips().add(new Clip(i, "clip " + i, sampleFileName, clipStart, clipEnd, warpMarkers));
 		}
 		// tracks with less clips need to be padded
 		int emptyClipsToAdd = clipsPerTrack - i % clipsPerTrack;
