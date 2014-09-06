@@ -243,7 +243,7 @@
 												<LoopStart Value="{{getStartPos}}" />
 												<LoopEnd Value="{{getEndPos}}" />
 												<StartRelative Value="0" />
-												<LoopOn Value="false" />
+												<LoopOn Value="true" />
 												<OutMarker Value="593.61059383325005" />
 												<HiddenLoopStart Value="0" />
 												<HiddenLoopEnd Value="4" />
@@ -307,7 +307,7 @@
 											<FreezeStart Value="0" />
 											<FreezeEnd Value="0" />
 											<IsSongTempoMaster Value="false" />
-											<IsWarped Value="false" />
+											<IsWarped Value="true" />
 											<SampleRef>
 												<FileRef>
 													<HasRelativePath Value="true" />

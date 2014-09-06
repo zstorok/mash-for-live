@@ -1,7 +1,7 @@
 package hu.zstorok.mashforlive;
 
 import hu.zstorok.mashforlive.als.ILiveSetBuilder;
-import hu.zstorok.mashforlive.als.MultiTrackBarClipLiveSetBuilder;
+import hu.zstorok.mashforlive.als.LoopingMultiTrackBarClipLiveSetBuilder;
 import hu.zstorok.mashforlive.client.EchoNestClient;
 import hu.zstorok.mashforlive.client.SoundCloudClient;
 
@@ -24,7 +24,7 @@ public class Application {
 
     @Bean
     public ILiveSetBuilder getLiveSetBuilder() {
-		return new MultiTrackBarClipLiveSetBuilder();
+		return new LoopingMultiTrackBarClipLiveSetBuilder();
     }
     
 	public static void main(String[] args) {
