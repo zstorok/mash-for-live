@@ -1,9 +1,9 @@
 package hu.zstorok.mashforlive.als;
 
 import hu.zstorok.mashforlive.als.LiveClip.WarpMarker;
-import hu.zstorok.mashforlive.client.echonest.Bar;
-import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
-import hu.zstorok.mashforlive.client.echonest.Track;
+import hu.zstorok.mashforlive.client.echonest.analyze.Analysis;
+import hu.zstorok.mashforlive.client.echonest.analyze.Bar;
+import hu.zstorok.mashforlive.client.echonest.analyze.Track;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +19,7 @@ public class MultiTrackBarClipLiveSetBuilder implements ILiveSetBuilder {
 	private static final int NUMBER_OF_TRACKS = 8;
 
 	@Override
-	public LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName) {
+	public LiveSet build(Analysis echoNestAnalysis, String sampleFileName) {
 		Track track = echoNestAnalysis.getTrack();
 		LiveSet liveSet = new LiveSet(track.getTempo());
 		List<Bar> bars = echoNestAnalysis.getBars();
@@ -48,7 +48,7 @@ public class MultiTrackBarClipLiveSetBuilder implements ILiveSetBuilder {
 		return liveSet;
 	}
 
-	private List<WarpMarker> buildWarpMarkers(EchoNestAnalysis echoNestAnalysis) {
+	private List<WarpMarker> buildWarpMarkers(Analysis echoNestAnalysis) {
 		return Collections.emptyList();
 	}
 

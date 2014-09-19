@@ -1,8 +1,6 @@
-package hu.zstorok.mashforlive.client.echonest;
+package hu.zstorok.mashforlive.client.echonest.analyze;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Summary {
 	private double acousticness, danceability, energy, liveness,
 			speechiness, valence;

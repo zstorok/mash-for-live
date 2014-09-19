@@ -1,8 +1,6 @@
-package hu.zstorok.mashforlive.client.echonest;
+package hu.zstorok.mashforlive.client.echonest.analyze;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Info {
 	private String artist, id, tag, title, url;
 

@@ -1,11 +1,12 @@
-package hu.zstorok.mashforlive.client.echonest;
+package hu.zstorok.mashforlive.client.echonest.analyze;
 
-import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.API_KEY;
-import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.BASE_URL;
-import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.TRACK_AUDIO_STATUS_URL_TEMPLATE;
-import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.TRACK_AUDIO_SUMMARY_URL_TEMPLATE;
-import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.TRACK_UPLOAD_URL_TEMPLATE;
+import static hu.zstorok.mashforlive.client.echonest.analyze.EchoNestConstants.API_KEY;
+import static hu.zstorok.mashforlive.client.echonest.analyze.EchoNestConstants.BASE_URL;
+import static hu.zstorok.mashforlive.client.echonest.analyze.EchoNestConstants.TRACK_AUDIO_STATUS_URL_TEMPLATE;
+import static hu.zstorok.mashforlive.client.echonest.analyze.EchoNestConstants.TRACK_AUDIO_SUMMARY_URL_TEMPLATE;
+import static hu.zstorok.mashforlive.client.echonest.analyze.EchoNestConstants.TRACK_UPLOAD_URL_TEMPLATE;
 import hu.zstorok.mashforlive.client.WebServiceClientException;
+import hu.zstorok.mashforlive.client.echonest.upload.UploadResponseWrapper;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,8 +32,8 @@ public class EchoNestClient {
 	private ObjectMapper mapper;
 	private final RestTemplate restTemplate = new RestTemplate();
 
-	public JsonNode uploadTrack(String url) {
-		return restTemplate.postForObject(BASE_URL + TRACK_UPLOAD_URL_TEMPLATE, null, JsonNode.class, API_KEY, url);
+	public UploadResponseWrapper uploadTrack(String url) {
+		return restTemplate.postForObject(BASE_URL + TRACK_UPLOAD_URL_TEMPLATE, null, UploadResponseWrapper.class, API_KEY, url);
 	}
 	
 	public JsonNode getTrackAudioSummaryAsJsonNode(String id) {
@@ -50,12 +51,12 @@ public class EchoNestClient {
 		return status;
 	}
 
-	public EchoNestAnalysis getAnalysis(String analysisUrl, String trackId) {
+	public Analysis getAnalysis(String analysisUrl, String trackId) {
 		System.out.println(analysisUrl);
 		try {
 			URI uri = new URI(analysisUrl);
-			EchoNestAnalysis response = new RestTemplate().getForObject(uri,
-					EchoNestAnalysis.class);
+			Analysis response = new RestTemplate().getForObject(uri,
+					Analysis.class);
 			return response;
 		} catch (HttpStatusCodeException e) {
 			if (e.getStatusCode() == HttpStatus.NOT_FOUND) {

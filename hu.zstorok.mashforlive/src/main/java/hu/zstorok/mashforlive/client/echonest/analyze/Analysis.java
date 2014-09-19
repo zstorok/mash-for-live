@@ -1,11 +1,14 @@
-package hu.zstorok.mashforlive.client.echonest;
+package hu.zstorok.mashforlive.client.echonest.analyze;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class EchoNestAnalysis {
+/**
+ * POJO to represent the response of the Echo Nest Analyze service.
+ * 
+ * @author cfstras
+ * @author zstorok
+ */
+public class Analysis {
 	private List<Bar> bars;
 	private List<Beat> beats;
 	private List<Section> sections;

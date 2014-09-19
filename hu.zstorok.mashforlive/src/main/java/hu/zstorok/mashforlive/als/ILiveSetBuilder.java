@@ -1,6 +1,6 @@
 package hu.zstorok.mashforlive.als;
 
-import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
+import hu.zstorok.mashforlive.client.echonest.analyze.Analysis;
 
 /**
  * Interface for Ableton Live set builders.
@@ -16,5 +16,5 @@ public interface ILiveSetBuilder {
 	 * @param sampleFileName the sample file name
 	 * @return the Ableton Live set model
 	 */
-	LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName);
+	LiveSet build(Analysis echoNestAnalysis, String sampleFileName);
 }

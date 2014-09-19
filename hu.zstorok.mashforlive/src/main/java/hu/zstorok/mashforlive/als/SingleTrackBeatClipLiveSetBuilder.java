@@ -1,9 +1,9 @@
 package hu.zstorok.mashforlive.als;
 
 import hu.zstorok.mashforlive.als.LiveClip.WarpMarker;
-import hu.zstorok.mashforlive.client.echonest.Beat;
-import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
-import hu.zstorok.mashforlive.client.echonest.Track;
+import hu.zstorok.mashforlive.client.echonest.analyze.Analysis;
+import hu.zstorok.mashforlive.client.echonest.analyze.Beat;
+import hu.zstorok.mashforlive.client.echonest.analyze.Track;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 public class SingleTrackBeatClipLiveSetBuilder implements ILiveSetBuilder {
 
 	@Override
-	public LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName) {
+	public LiveSet build(Analysis echoNestAnalysis, String sampleFileName) {
 		System.out.println(echoNestAnalysis);
 		Track track = echoNestAnalysis.getTrack();
 		LiveSet liveSet = new LiveSet(track.getTempo());
@@ -34,7 +34,7 @@ public class SingleTrackBeatClipLiveSetBuilder implements ILiveSetBuilder {
 		return liveSet;
 	}
 	
-	private List<WarpMarker> buildWarpMarkers(EchoNestAnalysis echoNestAnalysis) {
+	private List<WarpMarker> buildWarpMarkers(Analysis echoNestAnalysis) {
 		return Collections.emptyList();
 	}
 

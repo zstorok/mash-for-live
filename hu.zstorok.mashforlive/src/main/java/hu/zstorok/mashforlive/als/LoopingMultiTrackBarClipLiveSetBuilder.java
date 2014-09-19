@@ -2,10 +2,10 @@ package hu.zstorok.mashforlive.als;
 
 import hu.zstorok.mashforlive.als.LiveClip.ClipColor;
 import hu.zstorok.mashforlive.als.LiveClip.WarpMarker;
-import hu.zstorok.mashforlive.client.echonest.Bar;
-import hu.zstorok.mashforlive.client.echonest.Beat;
-import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
-import hu.zstorok.mashforlive.client.echonest.Track;
+import hu.zstorok.mashforlive.client.echonest.analyze.Analysis;
+import hu.zstorok.mashforlive.client.echonest.analyze.Bar;
+import hu.zstorok.mashforlive.client.echonest.analyze.Beat;
+import hu.zstorok.mashforlive.client.echonest.analyze.Track;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +23,9 @@ public class LoopingMultiTrackBarClipLiveSetBuilder implements ILiveSetBuilder {
 	private static final int NUMBER_OF_TRACKS = 8;
 
 	@Override
-	public LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName) {
+	public LiveSet build(Analysis echoNestAnalysis, String sampleFileName) {
 		Track track = echoNestAnalysis.getTrack();
-		int timeSignature = track.getTime_signature();
+		int timeSignature = track.getTimeSignature();
 		LiveSet liveSet = new LiveSet(track.getTempo());
 		List<Bar> bars = echoNestAnalysis.getBars();
 		int barCount = bars.size();
@@ -53,7 +53,7 @@ public class LoopingMultiTrackBarClipLiveSetBuilder implements ILiveSetBuilder {
 		return liveSet;
 	}
 
-	private List<WarpMarker> buildWarpMarkers(EchoNestAnalysis echoNestAnalysis) {
+	private List<WarpMarker> buildWarpMarkers(Analysis echoNestAnalysis) {
 		List<Beat> beats = echoNestAnalysis.getBeats();
 		ArrayList<WarpMarker> warpMarkers = Lists.newArrayList();
 		for (int i = 0; i < beats.size(); i++) {

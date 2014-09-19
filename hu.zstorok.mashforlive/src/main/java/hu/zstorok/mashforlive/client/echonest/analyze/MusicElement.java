@@ -1,8 +1,11 @@
-package hu.zstorok.mashforlive.client.echonest;
+package hu.zstorok.mashforlive.client.echonest.analyze;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
+/**
+ * POJO to represent a musical element in the Echo Nest analysis results.
+ * 
+ * @author cfstras
+ * @author zstorok
+ */
 public abstract class MusicElement {
 	private double confidence, duration, start;
 

@@ -3,8 +3,9 @@ package hu.zstorok.mashforlive.controller;
 import hu.zstorok.mashforlive.als.ILiveSetBuilder;
 import hu.zstorok.mashforlive.als.LiveSet;
 import hu.zstorok.mashforlive.als.LiveSetGenerator;
-import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
-import hu.zstorok.mashforlive.client.echonest.EchoNestClient;
+import hu.zstorok.mashforlive.client.echonest.analyze.Analysis;
+import hu.zstorok.mashforlive.client.echonest.analyze.EchoNestClient;
+import hu.zstorok.mashforlive.client.echonest.upload.UploadResponseWrapper;
 import hu.zstorok.mashforlive.client.soundcloud.SoundCloudClient;
 import hu.zstorok.mashforlive.client.soundcloud.SoundCloudConstants;
 
@@ -117,8 +118,8 @@ public class MashForLiveService {
 		File audioFile = downloadAudioFile(projectDirectory, soundCloudTrackDownloadUrl);
 
 		// upload track to EchoNest
-		JsonNode trackUploadResponse = echoNestClient.uploadTrack(soundCloudTrackDownloadUrl);
-		String echoNestTrackId = trackUploadResponse.get("response").get("track").get("id").asText();
+		UploadResponseWrapper trackUploadResponse = echoNestClient.uploadTrack(soundCloudTrackDownloadUrl);
+		String echoNestTrackId = trackUploadResponse.getResponse().getTrack().getId();
 
 		// get EchoNest track audio summary
 		JsonNode echoNestTrackAudioSummary = echoNestClient.getTrackAudioSummaryAsJsonNode(echoNestTrackId);
@@ -126,7 +127,7 @@ public class MashForLiveService {
 		String echoNestAnalysisUrl = echoNestTrackAudioSummaryResponse.get("track").get("audio_summary")
 				.get("analysis_url").asText();
 		// get EchoNest track analysis data
-		EchoNestAnalysis echoNestAnalysis = echoNestClient.getAnalysis(
+		Analysis echoNestAnalysis = echoNestClient.getAnalysis(
 				echoNestAnalysisUrl, echoNestTrackId);
 
 		LiveSet liveSet = liveSetBuilder.build(echoNestAnalysis, audioFile.getName());
