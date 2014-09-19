@@ -10,8 +10,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -43,8 +44,8 @@ public class EchoNestClient {
 		JsonNode res = restTemplate.getForObject(BASE_URL
 				+ TRACK_AUDIO_STATUS_URL_TEMPLATE,
 				JsonNode.class, API_KEY, id);
-		EchoNestTrackStatus status = EchoNestTrackStatus.from(res
-				.get("response").get("track").get("status").asText());
+		String statusAsText = res.get("response").get("track").get("status").asText();
+		EchoNestTrackStatus status = EchoNestTrackStatus.fromJsonValue(statusAsText);
 		return status;
 	}
 
@@ -55,26 +56,26 @@ public class EchoNestClient {
 			EchoNestAnalysis response = new RestTemplate().getForObject(uri,
 					EchoNestAnalysis.class);
 			return response;
-		} catch (RestClientException e) {
-			if (e.getMessage().contains("404")) {
+		} catch (HttpStatusCodeException e) {
+			if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
 				EchoNestTrackStatus status;
 				do {
 					status = getTrackStatus(trackId);
 					System.out.println("track status: " + status);
-					if (status == EchoNestTrackStatus.pending) {
+					if (status == EchoNestTrackStatus.PENDING) {
 						try {
 							Thread.sleep(1500);
 						} catch (InterruptedException e1) {
 						}
 					}
-				} while (status == EchoNestTrackStatus.pending);
+				} while (status == EchoNestTrackStatus.PENDING);
 				switch (status) {
-				case unknown:
+				case UNKNOWN:
 					throw new WebServiceClientException(
 							"Submit error, track has never been received", e);
-				case complete:
+				case COMPLETE:
 					return getAnalysis(analysisUrl, trackId);
-				case error:
+				case ERROR:
 				default:
 					throw new WebServiceClientException(e);
 				}

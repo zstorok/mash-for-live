@@ -1,38 +1,49 @@
 package hu.zstorok.mashforlive.client;
 
+import com.google.common.base.Preconditions;
+
+/**
+ * Enum to represent the status of a track in the Echo Nest service.
+ * 
+ * @author cfstras
+ * @author zstorok - introduced JSON value field
+ */
 public enum EchoNestTrackStatus {
 	/**
 	 * The track has never been submitted for analysis. Upload the track for
 	 * analysis.
 	 */
-	unknown,
+	UNKNOWN("unknown"),
 
 	/**
 	 * The track has been uploaded for analysis, but the analysis is not yet
 	 * ready. Wait for status to change.
 	 */
-	pending,
+	PENDING("pending"),
 
 	/**
 	 * The track has been analyzed.
 	 */
-	complete,
+	COMPLETE("complete"),
 
 	/**
 	 * The track could not be analyzed.
 	 */
-	error;
+	ERROR("error");
 
-	public static EchoNestTrackStatus from(String raw) {
-		EchoNestTrackStatus s = valueOf(raw);
-		if (s != null) {
-			return s;
-		}
-		for (EchoNestTrackStatus p : values()) {
-			if (p.name().toLowerCase().equals(raw.toLowerCase())) {
-				return p;
+	private final String jsonValue;
+
+	private EchoNestTrackStatus(String jsonValue) {
+		this.jsonValue = jsonValue;
+	}
+	
+	public static EchoNestTrackStatus fromJsonValue(String jsonValue) {
+		Preconditions.checkNotNull(jsonValue, "JSON value must not be null.");
+		for (EchoNestTrackStatus value : values()) {
+			if (value.jsonValue.equals(jsonValue)) {
+				return value;
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("Unexpected JSON value: " + jsonValue);
 	}
 }
