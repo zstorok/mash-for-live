@@ -1,0 +1,20 @@
+{
+    "response": {
+        "status": {
+            "version": "4.2",
+            "code": 0,
+            "message": "Success"
+        },
+        "track": {
+            "status": "pending",
+            "artist": "",
+            "title": "",
+            "release": "",
+            "audio_md5": "016efd021ae3a1714494d799ecbdf933",
+            "bitrate": 320,
+            "id": "TRMPFEN1488FB4ADBE",
+            "samplerate": 44100,
+            "md5": "8c3276439439a54ff2a328eb47822751"
+        }
+    }
+}
