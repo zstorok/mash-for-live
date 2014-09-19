@@ -1,4 +1,4 @@
-package com.github.mashforlive;
+package hu.zstorok.mashforlive;
 
 import hu.zstorok.mashforlive.Application;
 
