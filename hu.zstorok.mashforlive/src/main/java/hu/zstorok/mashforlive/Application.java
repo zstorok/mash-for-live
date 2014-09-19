@@ -2,8 +2,8 @@ package hu.zstorok.mashforlive;
 
 import hu.zstorok.mashforlive.als.ILiveSetBuilder;
 import hu.zstorok.mashforlive.als.LoopingMultiTrackBarClipLiveSetBuilder;
-import hu.zstorok.mashforlive.client.EchoNestClient;
-import hu.zstorok.mashforlive.client.SoundCloudClient;
+import hu.zstorok.mashforlive.client.echonest.EchoNestClient;
+import hu.zstorok.mashforlive.client.soundcloud.SoundCloudClient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

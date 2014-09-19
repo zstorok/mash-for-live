@@ -1,4 +1,4 @@
-package hu.zstorok.mashforlive.client;
+package hu.zstorok.mashforlive.client.echonest;
 
 import com.google.common.base.Preconditions;
 

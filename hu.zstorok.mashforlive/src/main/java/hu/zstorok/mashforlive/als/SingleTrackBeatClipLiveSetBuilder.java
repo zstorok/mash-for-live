@@ -1,8 +1,9 @@
 package hu.zstorok.mashforlive.als;
 
-import hu.zstorok.mashforlive.als.Clip.WarpMarker;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis.Beat;
+import hu.zstorok.mashforlive.als.LiveClip.WarpMarker;
+import hu.zstorok.mashforlive.client.echonest.Beat;
+import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
+import hu.zstorok.mashforlive.client.echonest.Track;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,18 +19,18 @@ public class SingleTrackBeatClipLiveSetBuilder implements ILiveSetBuilder {
 	@Override
 	public LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName) {
 		System.out.println(echoNestAnalysis);
-		EchoNestAnalysis.Track track = echoNestAnalysis.getTrack();
+		Track track = echoNestAnalysis.getTrack();
 		LiveSet liveSet = new LiveSet(track.getTempo());
-		Track liveSetTrack = new Track(1, "track 1");
-		List<Clip> liveSetTrackClips = liveSetTrack.getClips();
+		LiveTrack liveTrack = new LiveTrack(1, "track 1");
+		List<LiveClip> liveTrackClips = liveTrack.getClips();
 		List<Beat> beats = echoNestAnalysis.getBeats();
 		for (int i = 0; i < beats.size(); i++) {
 			Beat beat = beats.get(i);
 			double clipStart = beat.getStart();
 			double clipEnd = clipStart + beat.getDuration();
-			liveSetTrackClips.add(new Clip(i, "clip " + i, sampleFileName, clipStart, clipEnd, buildWarpMarkers(echoNestAnalysis)));
+			liveTrackClips.add(new LiveClip(i, "clip " + i, sampleFileName, clipStart, clipEnd, buildWarpMarkers(echoNestAnalysis)));
 		}
-		liveSet.getTracks().add(liveSetTrack);
+		liveSet.getTracks().add(liveTrack);
 		return liveSet;
 	}
 	

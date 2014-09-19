@@ -1,10 +1,11 @@
 package hu.zstorok.mashforlive.als;
 
-import hu.zstorok.mashforlive.als.Clip.ClipColor;
-import hu.zstorok.mashforlive.als.Clip.WarpMarker;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis.Bar;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis.Beat;
+import hu.zstorok.mashforlive.als.LiveClip.ClipColor;
+import hu.zstorok.mashforlive.als.LiveClip.WarpMarker;
+import hu.zstorok.mashforlive.client.echonest.Bar;
+import hu.zstorok.mashforlive.client.echonest.Beat;
+import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
+import hu.zstorok.mashforlive.client.echonest.Track;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,31 +24,31 @@ public class LoopingMultiTrackBarClipLiveSetBuilder implements ILiveSetBuilder {
 
 	@Override
 	public LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName) {
-		EchoNestAnalysis.Track track = echoNestAnalysis.getTrack();
+		Track track = echoNestAnalysis.getTrack();
 		int timeSignature = track.getTime_signature();
 		LiveSet liveSet = new LiveSet(track.getTempo());
 		List<Bar> bars = echoNestAnalysis.getBars();
 		int barCount = bars.size();
 		int clipsPerTrack = Math.floorDiv(barCount, NUMBER_OF_TRACKS) + 1;
 		int trackIndex = 1;
-		Track liveSetTrack = null;
+		LiveTrack liveSetTrack = null;
 		int i = 0;
 		for (; i < barCount; i++) {
 			if (i % clipsPerTrack == 0) {
-				liveSetTrack = new Track(trackIndex, "track " + trackIndex);
+				liveSetTrack = new LiveTrack(trackIndex, "track " + trackIndex);
 				liveSet.getTracks().add(liveSetTrack);
 				trackIndex++;
 			}
 			Bar bar = bars.get(i);
 			List<WarpMarker> warpMarkers = buildWarpMarkers(echoNestAnalysis);
 			// clip loop positions are in beats when the clip is warped
-			liveSetTrack.getClips().add(new Clip(i, "clip " + i, sampleFileName, i * timeSignature, (i + 1) * timeSignature, warpMarkers, 
+			liveSetTrack.getClips().add(new LiveClip(i, "clip " + i, sampleFileName, i * timeSignature, (i + 1) * timeSignature, warpMarkers, 
 					ClipColor.random(), false));
 		}
 		// tracks with less clips need to be padded
 		int emptyClipsToAdd = clipsPerTrack - i % clipsPerTrack;
 		for (int j = 0; j < emptyClipsToAdd; j++) {
-			liveSetTrack.getClips().add(new Clip());
+			liveSetTrack.getClips().add(new LiveClip());
 		}
 		return liveSet;
 	}

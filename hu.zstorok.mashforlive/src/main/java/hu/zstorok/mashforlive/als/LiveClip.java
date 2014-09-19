@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * @author zstorok
  */
-public class Clip {
+public class LiveClip {
 
 	private final int id;
 	private final String name;
@@ -19,18 +19,18 @@ public class Clip {
 	private final ClipColor color;
 	private final boolean repeat;
 
-	public Clip() {
+	public LiveClip() {
 		this(-1, null, null, -1, -1, Collections.emptyList(), ClipColor.Orange,
 				true);
 	}
 	
-	public Clip(int id, String name, String sampleFileName, double startPos,
+	public LiveClip(int id, String name, String sampleFileName, double startPos,
 			double endPos, List<WarpMarker> warpMarkers) {
 		this(id, name, sampleFileName, startPos, endPos, warpMarkers, ClipColor
 				.random(), true);
 	}
 
-	public Clip(int id, String name, String sampleFileName, double startPos,
+	public LiveClip(int id, String name, String sampleFileName, double startPos,
 			double endPos, List<WarpMarker> warpMarkers, ClipColor color,
 			boolean repeat) {
 		this.id = id;

@@ -1,8 +1,9 @@
 package hu.zstorok.mashforlive.als;
 
-import hu.zstorok.mashforlive.als.Clip.WarpMarker;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis.Bar;
+import hu.zstorok.mashforlive.als.LiveClip.WarpMarker;
+import hu.zstorok.mashforlive.client.echonest.Bar;
+import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
+import hu.zstorok.mashforlive.client.echonest.Track;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,30 +20,30 @@ public class MultiTrackBarClipLiveSetBuilder implements ILiveSetBuilder {
 
 	@Override
 	public LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName) {
-		EchoNestAnalysis.Track track = echoNestAnalysis.getTrack();
+		Track track = echoNestAnalysis.getTrack();
 		LiveSet liveSet = new LiveSet(track.getTempo());
 		List<Bar> bars = echoNestAnalysis.getBars();
 		int barCount = bars.size();
 		int clipsPerTrack = Math.floorDiv(barCount, NUMBER_OF_TRACKS) + 1;
 		int trackIndex = 1;
-		Track liveSetTrack = null;
+		LiveTrack liveTrack = null;
 		int i = 0;
 		for (; i < barCount; i++) {
 			if (i % clipsPerTrack == 0) {
-				liveSetTrack = new Track(trackIndex, "track " + trackIndex);
-				liveSet.getTracks().add(liveSetTrack);
+				liveTrack = new LiveTrack(trackIndex, "track " + trackIndex);
+				liveSet.getTracks().add(liveTrack);
 				trackIndex++;
 			}
 			Bar bar = bars.get(i);
 			List<WarpMarker> warpMarkers = buildWarpMarkers(echoNestAnalysis);
 			double clipStart = bar.getStart();
 			double clipEnd = clipStart + bar.getDuration();
-			liveSetTrack.getClips().add(new Clip(i, "clip " + i, sampleFileName, clipStart, clipEnd, warpMarkers));
+			liveTrack.getClips().add(new LiveClip(i, "clip " + i, sampleFileName, clipStart, clipEnd, warpMarkers));
 		}
 		// tracks with less clips need to be padded
 		int emptyClipsToAdd = clipsPerTrack - i % clipsPerTrack;
 		for (int j = 0; j < emptyClipsToAdd; j++) {
-			liveSetTrack.getClips().add(new Clip());
+			liveTrack.getClips().add(new LiveClip());
 		}
 		return liveSet;
 	}

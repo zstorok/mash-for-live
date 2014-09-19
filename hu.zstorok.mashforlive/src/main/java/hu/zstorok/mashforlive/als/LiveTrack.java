@@ -9,17 +9,17 @@ import com.google.common.collect.Lists;
  * 
  * @author zstorok
  */
-public class Track {
+public class LiveTrack {
 	private final int id;
 	private final String name;
-	private final List<Clip> clips = Lists.newArrayList();
+	private final List<LiveClip> clips = Lists.newArrayList();
 
-	public Track(int id, String name) {
+	public LiveTrack(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 	
-	public List<Clip> getClips() {
+	public List<LiveClip> getClips() {
 		return clips;
 	}
 	

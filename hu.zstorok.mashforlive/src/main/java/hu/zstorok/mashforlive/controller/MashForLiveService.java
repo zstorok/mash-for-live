@@ -3,10 +3,10 @@ package hu.zstorok.mashforlive.controller;
 import hu.zstorok.mashforlive.als.ILiveSetBuilder;
 import hu.zstorok.mashforlive.als.LiveSet;
 import hu.zstorok.mashforlive.als.LiveSetGenerator;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis;
-import hu.zstorok.mashforlive.client.EchoNestClient;
-import hu.zstorok.mashforlive.client.SoundCloudClient;
-import hu.zstorok.mashforlive.client.SoundCloudConstants;
+import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
+import hu.zstorok.mashforlive.client.echonest.EchoNestClient;
+import hu.zstorok.mashforlive.client.soundcloud.SoundCloudClient;
+import hu.zstorok.mashforlive.client.soundcloud.SoundCloudConstants;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

@@ -1,10 +1,11 @@
-package hu.zstorok.mashforlive.client;
+package hu.zstorok.mashforlive.client.echonest;
 
-import static hu.zstorok.mashforlive.client.EchoNestConstants.API_KEY;
-import static hu.zstorok.mashforlive.client.EchoNestConstants.BASE_URL;
-import static hu.zstorok.mashforlive.client.EchoNestConstants.TRACK_AUDIO_STATUS_URL_TEMPLATE;
-import static hu.zstorok.mashforlive.client.EchoNestConstants.TRACK_AUDIO_SUMMARY_URL_TEMPLATE;
-import static hu.zstorok.mashforlive.client.EchoNestConstants.TRACK_UPLOAD_URL_TEMPLATE;
+import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.API_KEY;
+import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.BASE_URL;
+import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.TRACK_AUDIO_STATUS_URL_TEMPLATE;
+import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.TRACK_AUDIO_SUMMARY_URL_TEMPLATE;
+import static hu.zstorok.mashforlive.client.echonest.EchoNestConstants.TRACK_UPLOAD_URL_TEMPLATE;
+import hu.zstorok.mashforlive.client.WebServiceClientException;
 
 import java.net.URI;
 import java.net.URISyntaxException;

@@ -1,8 +1,9 @@
 package hu.zstorok.mashforlive.als;
 
-import hu.zstorok.mashforlive.als.Clip.WarpMarker;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis;
-import hu.zstorok.mashforlive.client.EchoNestAnalysis.Beat;
+import hu.zstorok.mashforlive.als.LiveClip.WarpMarker;
+import hu.zstorok.mashforlive.client.echonest.Beat;
+import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
+import hu.zstorok.mashforlive.client.echonest.Track;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,30 +20,30 @@ public class MultiTrackBeatClipLiveSetBuilder implements ILiveSetBuilder {
 	
 	@Override
 	public LiveSet build(EchoNestAnalysis echoNestAnalysis, String sampleFileName) {
-		EchoNestAnalysis.Track track = echoNestAnalysis.getTrack();
+		Track track = echoNestAnalysis.getTrack();
 		LiveSet liveSet = new LiveSet(track.getTempo());
 		List<Beat> beats = echoNestAnalysis.getBeats();
 		int beatCount = beats.size();
 		int clipsPerTrack = Math.floorDiv(beatCount, NUMBER_OF_TRACKS) + 1;
 		int trackIndex = 1;
-		Track liveSetTrack = null;
+		LiveTrack liveTrack = null;
 		int i = 0;
 		for (; i < beatCount; i++) {
 			if (i % clipsPerTrack == 0) {
-				liveSetTrack = new Track(trackIndex, "track " + trackIndex);
-				liveSet.getTracks().add(liveSetTrack);
+				liveTrack = new LiveTrack(trackIndex, "track " + trackIndex);
+				liveSet.getTracks().add(liveTrack);
 				trackIndex++;
 			}
 			Beat beat = beats.get(i);
 			List<WarpMarker> warpMarkers = buildWarpMarkers(echoNestAnalysis);
 			double clipStart = beat.getStart();
 			double clipEnd = clipStart + beat.getDuration();
-			liveSetTrack.getClips().add(new Clip(i, "clip " + i, sampleFileName, clipStart, clipEnd, warpMarkers));
+			liveTrack.getClips().add(new LiveClip(i, "clip " + i, sampleFileName, clipStart, clipEnd, warpMarkers));
 		}
 		// tracks with less clips need to be padded
 		int emptyClipsToAdd = clipsPerTrack - i % clipsPerTrack;
 		for (int j = 0; j < emptyClipsToAdd; j++) {
-			liveSetTrack.getClips().add(new Clip());
+			liveTrack.getClips().add(new LiveClip());
 		}
 		return liveSet;
 	}

@@ -1,6 +1,6 @@
 package hu.zstorok.mashforlive.als;
 
-import hu.zstorok.mashforlive.client.EchoNestAnalysis;
+import hu.zstorok.mashforlive.client.echonest.EchoNestAnalysis;
 
 /**
  * Interface for Ableton Live set builders.

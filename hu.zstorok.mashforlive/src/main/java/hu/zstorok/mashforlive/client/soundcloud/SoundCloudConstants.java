@@ -1,4 +1,4 @@
-package hu.zstorok.mashforlive.client;
+package hu.zstorok.mashforlive.client.soundcloud;
 
 /**
  * Constants related to the SoundCloud API.

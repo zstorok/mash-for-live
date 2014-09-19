@@ -11,13 +11,13 @@ import com.google.common.collect.Lists;
  */
 public class LiveSet {
 	private final double tempo;
-	private final List<Track> tracks = Lists.newArrayList();
+	private final List<LiveTrack> tracks = Lists.newArrayList();
 	
 	public LiveSet(double tempo) {
 		this.tempo = tempo;
 	}
 	
-	public List<Track> getTracks() {
+	public List<LiveTrack> getTracks() {
 		return tracks;
 	}
 	
@@ -28,7 +28,7 @@ public class LiveSet {
 	public List<String> getScenes() {
 		List<String> scenes = Lists.newArrayList();
 		int max=0;
-		for (Track t : tracks) {
+		for (LiveTrack t : tracks) {
 			int len = t.getClips().size();
 			if (len > max) max = len;
 		}

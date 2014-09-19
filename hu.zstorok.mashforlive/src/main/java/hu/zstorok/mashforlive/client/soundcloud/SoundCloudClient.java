@@ -1,6 +1,6 @@
-package hu.zstorok.mashforlive.client;
+package hu.zstorok.mashforlive.client.soundcloud;
 
-import static hu.zstorok.mashforlive.client.SoundCloudConstants.TRACK_BY_ID_URL_TEMPLATE;
+import static hu.zstorok.mashforlive.client.soundcloud.SoundCloudConstants.TRACK_BY_ID_URL_TEMPLATE;
 
 import java.util.Arrays;
 import java.util.List;
