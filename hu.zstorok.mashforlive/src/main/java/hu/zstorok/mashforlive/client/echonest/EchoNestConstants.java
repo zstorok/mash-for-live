@@ -1,4 +1,4 @@
-package hu.zstorok.mashforlive.client.echonest.analyze;
+package hu.zstorok.mashforlive.client.echonest;
 
 /**
  * Constants related to the EchoNest API.

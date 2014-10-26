@@ -3,8 +3,8 @@ package hu.zstorok.mashforlive.controller;
 import hu.zstorok.mashforlive.als.ILiveSetBuilder;
 import hu.zstorok.mashforlive.als.LiveSet;
 import hu.zstorok.mashforlive.als.LiveSetGenerator;
+import hu.zstorok.mashforlive.client.echonest.EchoNestClient;
 import hu.zstorok.mashforlive.client.echonest.analyze.Analysis;
-import hu.zstorok.mashforlive.client.echonest.analyze.EchoNestClient;
 import hu.zstorok.mashforlive.client.echonest.upload.UploadResponseWrapper;
 import hu.zstorok.mashforlive.client.soundcloud.SoundCloudClient;
 import hu.zstorok.mashforlive.client.soundcloud.SoundCloudConstants;
@@ -26,6 +26,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,8 +47,10 @@ import com.google.common.io.Files;
  * @author zstorok
  */
 @RestController
-public class MashForLiveService {
+public class ApplicationController {
 
+	private static Logger LOGGER = LoggerFactory.getLogger(ApplicationController.class);
+	
 	private static final String ZIP_FILE_EXTENSION = ".zip";
 	private static final String ZIP_FILE_NAME_PREFIX = "mash_for_live_";
 	private static final String ALS_FILE_RELATIVE_PATH = "mash_for_live.als";
@@ -69,6 +73,7 @@ public class MashForLiveService {
 	
 	@RequestMapping(value = "/service/zip/{id}", method = RequestMethod.GET, produces = "application/octet-stream")
 	public void getProjectZip(@PathVariable("id") String id, HttpServletResponse response) throws NotFoundException, DownloadFailedException {
+		LOGGER.info("Serving project ZIP for ID: " + id);
 		String tempZipFileName = ZIP_FILE_NAME_PREFIX + id + ZIP_FILE_EXTENSION;
 		File tempZipFile = new File(tempDirectory, tempZipFileName);
 		if (!tempZipFile.exists()) {
@@ -107,6 +112,7 @@ public class MashForLiveService {
 	@RequestMapping(value = "/service/zip", method = RequestMethod.POST, produces = "application/octet-stream")
 	public String generateProjectZip(String soundCloudTrackId) throws NotDownloadableException,
 			DownloadFailedException {
+		LOGGER.info("Generating project ZIP for SoundCloud Track ID: " + soundCloudTrackId);
 		File projectDirectory = Files.createTempDir();
 
 		// get track data from SoundCloud
@@ -167,13 +173,16 @@ public class MashForLiveService {
 
 	private File downloadAudioFile(File projectDirectory, String soundCloudTrackDownloadUrl)
 			throws DownloadFailedException {
+		LOGGER.info("Downloading track from SoundCloud: " + soundCloudTrackDownloadUrl);
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		try {
 			CloseableHttpResponse httpResponse = httpClient.execute(new HttpGet(soundCloudTrackDownloadUrl));
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
 			if (statusCode != 200) {
-				throw new DownloadFailedException("Error when downloading track from SoundCloud; status code: "
-						+ statusCode);
+				String message = "Error when downloading track from SoundCloud; status code: "
+						+ statusCode;
+				LOGGER.error(message);
+				throw new DownloadFailedException(message);
 			}
 			String audioFileName = getAudioFileName(httpResponse);
 			byte[] inputBytes = EntityUtils.toByteArray(httpResponse.getEntity());
@@ -239,5 +248,7 @@ public class MashForLiveService {
 	}
 	
 	@ExceptionHandler(value=Exception.class)
-	public void handleGenericException() {}
+	public void handleGenericException(Exception e) {
+		LOGGER.error("Error in application controller.", e);
+	}
 }

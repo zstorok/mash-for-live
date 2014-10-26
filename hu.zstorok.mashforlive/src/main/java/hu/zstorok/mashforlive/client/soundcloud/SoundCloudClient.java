@@ -2,8 +2,6 @@ package hu.zstorok.mashforlive.client.soundcloud;
 
 import static hu.zstorok.mashforlive.client.soundcloud.SoundCloudConstants.TRACK_BY_ID_URL_TEMPLATE;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -34,10 +32,4 @@ public class SoundCloudClient {
 		return jsonNode;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> getTracks(Map<String, String> options) {
-		Map<String, Object>[] maps = (Map<String, Object>[])restTemplate.getForObject("https://api.soundcloud.com/tracks.json?consumer_key={consumer_key}?filter=downloadable", 
-				Map[].class, SoundCloudConstants.CONSUMER_KEY);
-		return Arrays.asList(maps);
-	}
 }

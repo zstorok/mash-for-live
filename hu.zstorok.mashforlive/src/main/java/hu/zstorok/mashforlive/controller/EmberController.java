@@ -1,4 +1,4 @@
-package hu.zstorok.mashforlive;
+package hu.zstorok.mashforlive.controller;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +14,11 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller for serving the Ember.js frontend.
+ * 
+ * @author cfstras
+ */
 @RestController
 public class EmberController {
 	private final boolean debug = true;
@@ -44,7 +49,6 @@ public class EmberController {
 	@RequestMapping(value = "/js/templates.js", produces = "application/javascript; charset=utf-8")
 	public void templates(HttpServletResponse res) throws IOException {
 		Path ts = basePath.resolve("templates/");
-		System.out.println(ts);
 		Files.find(
 				ts,
 				10,
@@ -52,7 +56,6 @@ public class EmberController {
 						&& attr.isRegularFile())
 				.forEach(
 						(f) -> {
-							System.out.println(f);
 							try {
 								String name = ts.relativize(f).toString()
 										.replace('\\', '/')
@@ -76,7 +79,6 @@ public class EmberController {
 		Path ts = basePath.resolve("js/");
 		getJavascripts().forEach(
 				(f) -> {
-					System.out.println(f);
 					try {
 						res.getWriter().append("// ")
 								.append(ts.relativize(f).toString())
