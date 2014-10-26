@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UploadResponse {
 
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	public static class Status {
 		private String version;
 		private String code;
@@ -37,6 +38,7 @@ public class UploadResponse {
 
 	}
 
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	public static class Track {
 		private String id;
 		private String status;
@@ -48,6 +50,8 @@ public class UploadResponse {
 		private int bitrate;
 		private int samplerate;
 		private String md5;
+		@JsonProperty("analyzer_version")
+		private String analyzerVersion;
 
 		public String getStatus() {
 			return status;
@@ -119,6 +123,14 @@ public class UploadResponse {
 
 		public void setId(String id) {
 			this.id = id;
+		}
+
+		public String getAnalyzerVersion() {
+			return analyzerVersion;
+		}
+
+		public void setAnalyzerVersion(String analyzerVersion) {
+			this.analyzerVersion = analyzerVersion;
 		}
 
 	}
