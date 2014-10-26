@@ -1,30 +1,25 @@
-<div class="container-fluid">
-	<div class="page-header">
-	</div>
-
-	<div class="row">
-		<div class="col-xs-12 search-bar">
-			<div class="input-group">
-				<span class="input-group-addon"> <span
-					class="glyphicon glyphicon-search"></span>
-				</span> {{input class="form-control" placeholder="Search Soundcloud"
-				value=soundCloudSearch}}
-			</div>
+<div class="row">
+	<div class="col-xs-12 search-bar">
+		<div class="input-group">
+			<span class="input-group-addon"> <span
+				class="glyphicon glyphicon-search"></span>
+			</span> {{input class="form-control" placeholder="Search on SoundCloud"
+			value=soundCloudSearch}}
 		</div>
-		<hr>
-		{{#each i in results}}
-			{{#soundcloud-player track=i}}
-			<div class="submitTrack pull-right">
-				<button class="btn btn-success" {{action "submitTrack" i}}>
-					{{#if i.downloading}}
-					<span class="glyphicon glyphicon-repeat rotate"></span>
-					{{else}}
-					<span class="glyphicon glyphicon-music"></span>
-					{{/if}}
-				</button>
-			</div>
-			{{/soundcloud-player}}
-		{{/each}}
 	</div>
-
+	<hr>
+	{{#each i in results}}
+		{{#soundcloud-player track=i}}
+		<div class="submitTrack pull-right">
+			<button class="btn btn-success" {{action "submitTrack" i}}>
+				{{#if i.downloading}}
+				<span class="glyphicon glyphicon-repeat rotate"></span>
+				{{else}}
+				<span class="glyphicon glyphicon-download-alt"></span>
+				{{/if}}
+			</button>
+		</div>
+		{{/soundcloud-player}}
+	{{/each}}
 </div>
+
