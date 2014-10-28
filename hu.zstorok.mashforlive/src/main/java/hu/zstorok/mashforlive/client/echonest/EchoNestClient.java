@@ -72,7 +72,6 @@ public class EchoNestClient {
 				EchoNestTrackStatus status;
 				do {
 					status = getTrackStatus(trackId);
-					System.out.println("track status: " + status);
 					if (status == EchoNestTrackStatus.PENDING) {
 						try {
 							Thread.sleep(1500);

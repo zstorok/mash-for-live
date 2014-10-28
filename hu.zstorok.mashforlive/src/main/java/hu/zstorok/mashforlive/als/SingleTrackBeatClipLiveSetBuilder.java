@@ -18,7 +18,6 @@ public class SingleTrackBeatClipLiveSetBuilder implements ILiveSetBuilder {
 
 	@Override
 	public LiveSet build(Analysis echoNestAnalysis, String sampleFileName) {
-		System.out.println(echoNestAnalysis);
 		Track track = echoNestAnalysis.getTrack();
 		LiveSet liveSet = new LiveSet(track.getTempo());
 		LiveTrack liveTrack = new LiveTrack(1, "track 1");
