@@ -139,7 +139,7 @@ public class ApplicationController {
 				+ SoundCloudConstants.CONSUMER_KEY;
 		String trackTitle;
 		if (soundCloudTrack.get("title") != null && soundCloudTrack.get("title").isTextual()) {
-			trackTitle = soundCloudTrack.get("title").asText();
+			trackTitle = soundCloudTrack.get("title").asText().trim().replaceAll("[^a-zA-Z0-9-_\\.]", "_");
 		} else {
 			trackTitle = UNKNOWN_TRACK_TITLE;
 		}
