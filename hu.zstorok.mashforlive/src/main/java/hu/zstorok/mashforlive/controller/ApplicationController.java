@@ -14,10 +14,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,6 +40,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.collect.MapMaker;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 
@@ -52,9 +55,14 @@ public class ApplicationController {
 	private static Logger LOGGER = LoggerFactory.getLogger(ApplicationController.class);
 	
 	private static final String ZIP_FILE_EXTENSION = ".zip";
-	private static final String ZIP_FILE_NAME_PREFIX = "mash_for_live_";
-	private static final String ALS_FILE_RELATIVE_PATH = "mash_for_live.als";
+	private static final String TEMP_ZIP_FILE_NAME_PREFIX = "mash_for_live_";
+	private static final String DOWNLOADED_ZIP_FILE_NAME_SUFFIX = " (Mash for Live) Project";
+	private static final String ALS_FILE_NAME_SUFFIX = " (Mash for Live)";
 	private static final String SAMPLES_FOLDER_RELATIVE_PATH = "Samples/";
+	private static final String UNKNOWN_TRACK_TITLE = "Unknown Track";
+	private static final String ALS_FILE_EXTENSION = ".als";
+	
+	private final Map<UUID, String> uuidToTrackNameMap = new MapMaker().makeMap();
 
 	@Autowired
 	private SoundCloudClient soundCloudClient;
@@ -67,20 +75,30 @@ public class ApplicationController {
 	
 	private File tempDirectory;
 	
+	@PostConstruct
 	public void init() {
 		tempDirectory = Files.createTempDir();
+		LOGGER.info("Using temp directory: " + tempDirectory);
 	}
 	
 	@RequestMapping(value = "/service/zip/{id}", method = RequestMethod.GET, produces = "application/octet-stream")
 	public void getProjectZip(@PathVariable("id") String id, HttpServletResponse response) throws NotFoundException, DownloadFailedException {
 		LOGGER.info("Serving project ZIP for ID: " + id);
-		String tempZipFileName = ZIP_FILE_NAME_PREFIX + id + ZIP_FILE_EXTENSION;
+		String tempZipFileName = TEMP_ZIP_FILE_NAME_PREFIX + id + ZIP_FILE_EXTENSION;
 		File tempZipFile = new File(tempDirectory, tempZipFileName);
 		if (!tempZipFile.exists()) {
 			throw new NotFoundException();
 		}
 		
-		response.addHeader("Content-Disposition", "attachment; filename=" + tempZipFileName);
+		UUID uuid = UUID.fromString(id);
+		String trackName;
+		if (uuidToTrackNameMap.containsKey(uuid)) {
+			trackName = uuidToTrackNameMap.get(uuid);
+		} else {
+			trackName = tempZipFileName;
+		}
+		response.addHeader("Content-Disposition", "attachment; filename=" + trackName + DOWNLOADED_ZIP_FILE_NAME_SUFFIX
+				+ ZIP_FILE_EXTENSION);
 		response.setContentType("application/octet-stream");
 		
 		ServletOutputStream responseOutputStream = null;
@@ -119,6 +137,12 @@ public class ApplicationController {
 		JsonNode soundCloudTrack = soundCloudClient.getTrackAsJsonNode(soundCloudTrackId);
 		String soundCloudTrackDownloadUrl = soundCloudTrack.get("download_url").asText() + "?consumer_key="
 				+ SoundCloudConstants.CONSUMER_KEY;
+		String trackTitle;
+		if (soundCloudTrack.get("title") != null && soundCloudTrack.get("title").isTextual()) {
+			trackTitle = soundCloudTrack.get("title").asText();
+		} else {
+			trackTitle = UNKNOWN_TRACK_TITLE;
+		}
 
 		// download track from SoundCloud
 		File audioFile = downloadAudioFile(projectDirectory, soundCloudTrackDownloadUrl);
@@ -142,8 +166,9 @@ public class ApplicationController {
 		// create ZIP
 		ZipOutputStream zipOutputStream = null;
 		try {
-			String tempZipId = UUID.randomUUID().toString();
-			File tempZipFile = new File(tempDirectory, ZIP_FILE_NAME_PREFIX + tempZipId + ZIP_FILE_EXTENSION);
+			UUID tempZipUuid = UUID.randomUUID();
+			String tempZipId = tempZipUuid.toString();
+			File tempZipFile = new File(tempDirectory, TEMP_ZIP_FILE_NAME_PREFIX + tempZipId + ZIP_FILE_EXTENSION);
 			FileOutputStream tempZipFileOutputStream = new FileOutputStream(tempZipFile);
 			zipOutputStream = new ZipOutputStream(tempZipFileOutputStream);
 			zipOutputStream.putNextEntry(new ZipEntry(SAMPLES_FOLDER_RELATIVE_PATH));
@@ -153,9 +178,10 @@ public class ApplicationController {
 			FileInputStream audioFileInputStream = new FileInputStream(audioFile);
 			ByteStreams.copy(audioFileInputStream, zipOutputStream);
 			// add .als to zip
-			ZipEntry alsFileEntry = new ZipEntry(ALS_FILE_RELATIVE_PATH);
+			ZipEntry alsFileEntry = new ZipEntry(trackTitle + ALS_FILE_NAME_SUFFIX + ALS_FILE_EXTENSION);
 			zipOutputStream.putNextEntry(alsFileEntry);
 			zipOutputStream.write(alsBytes);
+			uuidToTrackNameMap.put(tempZipUuid, trackTitle);
 			return "/service/zip/" + tempZipId;
 		} catch (IOException e) {
 			throw new DownloadFailedException("Error when generating project ZIP file.");
