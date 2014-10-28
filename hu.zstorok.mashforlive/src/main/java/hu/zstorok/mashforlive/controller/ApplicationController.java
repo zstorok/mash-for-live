@@ -124,6 +124,9 @@ public class ApplicationController {
 					// ignore
 				}
 			}
+			// clean up both after successful and failed download
+			uuidToTrackNameMap.remove(uuid);
+			tempZipFile.delete();
 		}
 	}
 	
