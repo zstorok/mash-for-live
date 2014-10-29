@@ -127,6 +127,7 @@ public class ApplicationController {
 			// clean up both after successful and failed download
 			uuidToTrackNameMap.remove(uuid);
 			tempZipFile.delete();
+			LOGGER.info("Deleted temporary ZIP file: " + tempZipFile);
 		}
 	}
 	
@@ -134,7 +135,6 @@ public class ApplicationController {
 	public String generateProjectZip(String soundCloudTrackId) throws NotDownloadableException,
 			DownloadFailedException {
 		LOGGER.info("Generating project ZIP for SoundCloud Track ID: " + soundCloudTrackId);
-		File projectDirectory = Files.createTempDir();
 
 		// get track data from SoundCloud
 		JsonNode soundCloudTrack = soundCloudClient.getTrackAsJsonNode(soundCloudTrackId);
@@ -148,7 +148,7 @@ public class ApplicationController {
 		}
 
 		// download track from SoundCloud
-		File audioFile = downloadAudioFile(projectDirectory, soundCloudTrackDownloadUrl);
+		File audioFile = downloadAudioFile(tempDirectory, soundCloudTrackDownloadUrl);
 
 		// upload track to EchoNest
 		UploadResponseWrapper trackUploadResponse = echoNestClient.uploadTrack(soundCloudTrackDownloadUrl);
@@ -197,6 +197,9 @@ public class ApplicationController {
 					// ignore
 				}
 			}
+			// clean up downloaded audio file
+			audioFile.delete();
+			LOGGER.info("Deleted temporary audio file: " + audioFile);
 		}
 	}
 
