@@ -88,3 +88,8 @@
     transform: rotate(360deg);
   }
 }
+
+.popover-container .popover {
+	max-width: 320px;
+	width: 320px;
+}
