@@ -9,7 +9,7 @@ This project started out as a quick and dirty hack for Music Hack Day Berlin 201
 
 Live demo
 ---------
-http://mashforlive.com
+~~http://mashforlive.com~~ (currently offline)
 
 Requirements
 ------------
